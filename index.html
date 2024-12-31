@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cuối năm đầu duyên</title>
     <link href="https://fonts.cdnfonts.com/css/kristen-itc" rel="stylesheet">
     <style>
-        @font-face {
-            font-family: 'Kristen ITC';
-            src: url('https://fonts.cdnfonts.com/css/kristen-itc') format('woff2');
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Playfair+Display:wght@400;700&family=Merriweather:wght@300;400&display=swap');
+
         body {
-            font-family: 'Kristen ITC', cursive;
+            font-family: 'Merriweather', serif;
+            /* Default font for body */
             background-color: #FAFAD2;
-            min-height: 100vh;
             margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
+            min-height: 100vh;
         }
+
         .container {
             max-width: 800px;
             padding: 40px;
@@ -27,54 +27,63 @@
             border-radius: 15px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
         }
+
         h1 {
             text-align: center;
-            color: rgb(240,128,128);
+            color: rgb(240, 128, 128);
             margin-bottom: 30px;
             font-size: 2.5em;
         }
+
         .poem {
             font-size: 1.2em;
             line-height: 1.8;
             text-align: center;
-            color: rgb(240,128,128);
-            min-height: 400px;
+            color: rgb(240, 128, 128);
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            /* Space between elements */
+            margin: 20px auto;
+            max-width: 800px;
+            /* Restrict poem width for better readability */
         }
+
         .line {
             display: none;
             opacity: 0;
             transform: translateY(20px);
             transition: all 1s ease;
-            position: absolute;
             width: 100%;
-            left: 0;
-            text-align: center;
         }
+
         .line.visible {
             display: block;
             opacity: 1;
             transform: translateY(0);
         }
+
         .line.permanent {
-            position: relative;
             display: block;
         }
+
         .flower {
             position: absolute;
             pointer-events: none;
             animation: flowerFall 10s linear infinite;
         }
+
         @keyframes flowerFall {
             0% {
                 transform: translateY(-100%) rotate(0deg);
             }
+
             100% {
                 transform: translateY(100vh) rotate(360deg);
             }
         }
+
         #audioControl {
             position: fixed;
             bottom: 30px;
@@ -83,68 +92,121 @@
             padding: 15px 25px;
             border-radius: 10px;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
+
         #musicBtn {
             font-size: 1.2em;
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
-            background: rgb(240,128,128);
+            background: rgb(240, 128, 128);
             color: white;
             cursor: pointer;
             transition: all 0.3s ease;
         }
+
         #musicBtn:hover {
-            background: rgb(220,108,108);
+            background: rgb(220, 108, 108);
             transform: scale(1.05);
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .poem-image {
+            max-width: 80%;
+            /* Giới hạn chiều rộng tối đa là 80% màn hình */
+            max-height: 300px;
+            /* Giới hạn chiều cao tối đa là 300px */
+            height: auto;
+            /* Tự động điều chỉnh chiều cao dựa trên chiều rộng */
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease-in-out;
+            object-fit: contain;
+            /* Đảm bảo hình ảnh không bị méo */
+        }
+
+        .poem .line {
+            max-width: 80%;
+            /* Giới hạn chiều rộng của dòng thơ */
+            margin: 0 auto;
+            /* Căn giữa dòng thơ */
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>Cuối năm đầu duyên</h1>
         <div class="poem" id="poem">
-            <div class="line">Rực rõ đêm sao bừng ánh trăng</div>
+            <div class="image-container">
+                <img src="image/img1.jpg" alt="Lantern Love" class="poem-image">
+            </div>
+            <div class="line">Rực rỡ đêm sao bừng ánh trăng
+            </div>
             <div class="line">Pháo hoa tô điểm kỷ niệm xưa</div>
-            <div class="line">Ngàn hoa rực rỡ trong phúc chốt</div>
+            <div class="line">Ngàn hoa rực rỡ trong phút chốc</div>
             <div class="line">Như vạn lời tin gửi ngọt ngào.</div>
-            <div class="line">&nbsp;</div>
             <div class="line">Như pháo hoa trao lời thương nhớ</div>
             <div class="line">Gửi người trong mộng giữa đêm trăng</div>
             <div class="line">Dẫu đường tình có còn xa vợi</div>
-            <div class="line">Vẫn giữ trong tim một giấc nồng</div>
-            <div class="line">&nbsp;</div>
+            <div class="line">Vẫn giữ trong tim một giấc nồng.</div>
             <div class="line">Pháo nở rồi tàn theo gió bay</div>
-            <div class="line">Tình đẹp vẫn nồng trong đêm nay</div>
-            <div class="line">Giao thường khắc khoải chờ nàng đến</div>
+            <div class="line">Tình đẹp vẫn nồng trong đêm nay
+            </div>
+            <div class="line">Giao thừa khắc khoải chờ nàng đến</div>
             <div class="line">Hạnh phúc đôi ta mãi thế này.</div>
+            <div class="line" style="text-align: right; margin-top: 20px;">Hoài Hiếu</div>
         </div>
+
+
     </div>
 
     <div id="audioControl">
         <audio id="bgMusic" loop>
-            <source src="music/AURORA - Soft Universe (Audio) - iamAURORAVEVO.mp3" type="audio/mpeg">
+            <source src="music/music1.mp3" type="audio/mpeg">
         </audio>
-        <button onclick="toggleMusic()" id="musicBtn">🎵 Phát nhạc</button>
+        <button onclick="toggleMusic()" id="musicBtn">🎵 Tắt nhạc</button>
     </div>
-
     <script>
         let currentLine = 0;
         const lines = document.querySelectorAll('.line');
-        const delay = 1750; // 1.75 giây cho mỗi dòng
-        let isPlaying = false;
+        const delay = 1850; // 1.75 giây cho mỗi dòng
+        let isPlaying = true;
 
         function showNextLine() {
             if (currentLine > 0) {
                 lines[currentLine - 1].style.display = 'none';
             }
-            
+
             if (currentLine < lines.length) {
                 lines[currentLine].style.display = 'block';
                 lines[currentLine].classList.add('visible');
                 currentLine++;
-                
+
                 if (currentLine < lines.length) {
                     setTimeout(showNextLine, delay);
                 } else {
@@ -167,7 +229,7 @@
             flower.className = 'flower';
             flower.style.left = Math.random() * window.innerWidth + 'px';
             flower.innerHTML = '🌸';
-            flower.style.fontSize = Math.random() * 20 + 10 + 'px';
+            flower.style.fontSize = Math.random() * 30 + 10 + 'px';
             document.body.appendChild(flower);
 
             flower.addEventListener('animationend', () => {
@@ -180,23 +242,36 @@
         }
 
         function toggleMusic() {
-            const audio = document.getElementById('bgMusic');
-            const musicBtn = document.getElementById('musicBtn');
-            
-            if (isPlaying) {
-                audio.pause();
-                musicBtn.textContent = '🎵 Phát nhạc';
-            } else {
-                audio.play();
-                musicBtn.textContent = '🎵 Tắt nhạc';
-            }
-            isPlaying = !isPlaying;
+        const audio = document.getElementById('bgMusic');
+        const musicBtn = document.getElementById('musicBtn');
+
+        if (isPlaying) {
+            audio.pause();
+            musicBtn.textContent = '🎵 Phát nhạc';
+        } else {
+            audio.play();
+            musicBtn.textContent = '🎵 Tắt nhạc';
         }
+        isPlaying = !isPlaying;
+    }
 
         // Bắt đầu animation khi trang được load
         document.addEventListener('DOMContentLoaded', () => {
             setTimeout(showNextLine, 1000);
+            const audio = document.getElementById('bgMusic');
+            audio.play().catch(function (error) {
+                console.log("Audio autoplay failed:", error);
+                isPlaying = false;
+                document.getElementById('musicBtn').textContent = '🎵 Phát nhạc';
+            });
         });
+        window.onload = function() {
+        const audio = document.getElementById('bgMusic');
+        audio.play();
+    }
+
+
     </script>
 </body>
+
 </html>
