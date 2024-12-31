@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuối năm đầu duyên</title>
+    <link href="https://fonts.cdnfonts.com/css/kristen-itc" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'Kristen ITC';
+            src: url('https://fonts.cdnfonts.com/css/kristen-itc') format('woff2');
+        }
+        body {
+            font-family: 'Kristen ITC', cursive;
+            background-color: #FAFAD2;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        .container {
+            max-width: 800px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: rgb(240,128,128);
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        .poem {
+            font-size: 1.2em;
+            line-height: 1.8;
+            text-align: center;
+            color: rgb(240,128,128);
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .line {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1s ease;
+            position: absolute;
+            width: 100%;
+            left: 0;
+            text-align: center;
+        }
+        .line.visible {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .line.permanent {
+            position: relative;
+            display: block;
+        }
+        .flower {
+            position: absolute;
+            pointer-events: none;
+            animation: flowerFall 10s linear infinite;
+        }
+        @keyframes flowerFall {
+            0% {
+                transform: translateY(-100%) rotate(0deg);
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+        #audioControl {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px 25px;
+            border-radius: 10px;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        #musicBtn {
+            font-size: 1.2em;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background: rgb(240,128,128);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        #musicBtn:hover {
+            background: rgb(220,108,108);
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cuối năm đầu duyên</h1>
+        <div class="poem" id="poem">
+            <div class="line">Rực rõ đêm sao bừng ánh trăng</div>
+            <div class="line">Pháo hoa tô điểm kỷ niệm xưa</div>
+            <div class="line">Ngàn hoa rực rỡ trong phúc chốt</div>
+            <div class="line">Như vạn lời tin gửi ngọt ngào.</div>
+            <div class="line">&nbsp;</div>
+            <div class="line">Như pháo hoa trao lời thương nhớ</div>
+            <div class="line">Gửi người trong mộng giữa đêm trăng</div>
+            <div class="line">Dẫu đường tình có còn xa vợi</div>
+            <div class="line">Vẫn giữ trong tim một giấc nồng</div>
+            <div class="line">&nbsp;</div>
+            <div class="line">Pháo nở rồi tàn theo gió bay</div>
+            <div class="line">Tình đẹp vẫn nồng trong đêm nay</div>
+            <div class="line">Giao thường khắc khoải chờ nàng đến</div>
+            <div class="line">Hạnh phúc đôi ta mãi thế này.</div>
+        </div>
+    </div>
+
+    <div id="audioControl">
+        <audio id="bgMusic" loop>
+            <source src="music/AURORA - Soft Universe (Audio) - iamAURORAVEVO.mp3" type="audio/mpeg">
+        </audio>
+        <button onclick="toggleMusic()" id="musicBtn">🎵 Phát nhạc</button>
+    </div>
+
+    <script>
+        let currentLine = 0;
+        const lines = document.querySelectorAll('.line');
+        const delay = 1750; // 1.75 giây cho mỗi dòng
+        let isPlaying = false;
+
+        function showNextLine() {
+            if (currentLine > 0) {
+                lines[currentLine - 1].style.display = 'none';
+            }
+            
+            if (currentLine < lines.length) {
+                lines[currentLine].style.display = 'block';
+                lines[currentLine].classList.add('visible');
+                currentLine++;
+                
+                if (currentLine < lines.length) {
+                    setTimeout(showNextLine, delay);
+                } else {
+                    showFullPoem();
+                }
+            }
+        }
+
+        function showFullPoem() {
+            setTimeout(() => {
+                lines.forEach(line => {
+                    line.classList.add('permanent');
+                });
+                startFlowerAnimation();
+            }, 1000);
+        }
+
+        function createFlower() {
+            const flower = document.createElement('div');
+            flower.className = 'flower';
+            flower.style.left = Math.random() * window.innerWidth + 'px';
+            flower.innerHTML = '🌸';
+            flower.style.fontSize = Math.random() * 20 + 10 + 'px';
+            document.body.appendChild(flower);
+
+            flower.addEventListener('animationend', () => {
+                flower.remove();
+            });
+        }
+
+        function startFlowerAnimation() {
+            setInterval(createFlower, 300);
+        }
+
+        function toggleMusic() {
+            const audio = document.getElementById('bgMusic');
+            const musicBtn = document.getElementById('musicBtn');
+            
+            if (isPlaying) {
+                audio.pause();
+                musicBtn.textContent = '🎵 Phát nhạc';
+            } else {
+                audio.play();
+                musicBtn.textContent = '🎵 Tắt nhạc';
+            }
+            isPlaying = !isPlaying;
+        }
+
+        // Bắt đầu animation khi trang được load
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(showNextLine, 1000);
+        });
+    </script>
+</body>
+</html>
